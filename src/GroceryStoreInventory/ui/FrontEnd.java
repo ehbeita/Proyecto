@@ -28,8 +28,8 @@ public class FrontEnd extends JFrame{
 
     private void construccionPantalla(){
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setSize(400,200);
-        super.setLayout(new GridLayout(5,2));
+        super.setSize(500,200);
+        super.setLayout(new GridLayout(6,2));//6/2
     }
 
     private void agregarComponentes(Component componente){
@@ -39,6 +39,7 @@ public class FrontEnd extends JFrame{
     private void crearComponentes(){
 
         JLabel lblProducto = new JLabel("Producto");
+        //JLabel lblSpace = new JLabel("");
         JLabel lblCodigo = new JLabel("Codigo");
         JLabel lblNombre = new JLabel("Nombre");
         JLabel lblTipoUnidad = new JLabel("Tipo de Unidad");
@@ -54,6 +55,9 @@ public class FrontEnd extends JFrame{
         JTextField txtCantidadStock = new JTextField();
         JTextField txtDescripcion = new JTextField();
         JTextField txtPresentacion = new JTextField();
+
+        lblPresentacion.setVisible(false);
+        txtPresentacion.setVisible(false);
 
         JRadioButton btnFruta = new JRadioButton("Fruta");
         //btnFruta.setMnemonic(KeyEvent.VK_B);
@@ -77,12 +81,12 @@ public class FrontEnd extends JFrame{
         //pigButton.setActionCommand(pigString);
 
         //Group the radio buttons.
-        ButtonGroup groupProducto = new ButtonGroup();
+        /*ButtonGroup groupProducto = new ButtonGroup();
         groupProducto.add(btnFruta);
         groupProducto.add(btnVegetal);
         groupProducto.add(btnCarbo);
         groupProducto.add(btnCarne);
-        groupProducto.add(btnLacteo);
+        groupProducto.add(btnLacteo);*/
 
         btnFruta.addActionListener(new AbstractAction() {
             @Override
@@ -92,6 +96,8 @@ public class FrontEnd extends JFrame{
                 btnCarne.setSelected(false);
                 btnLacteo.setSelected(false);
                 btnFruta.setSelected(true);
+                lblPresentacion.setVisible(false);
+                txtPresentacion.setVisible(false);
             }
         });
 
@@ -103,6 +109,8 @@ public class FrontEnd extends JFrame{
                 btnCarne.setSelected(false);
                 btnLacteo.setSelected(false);
                 btnVegetal.setSelected(true);
+                lblPresentacion.setVisible(false);
+                txtPresentacion.setVisible(false);
             }
         });
 
@@ -114,6 +122,8 @@ public class FrontEnd extends JFrame{
                 btnCarne.setSelected(false);
                 btnLacteo.setSelected(false);
                 btnCarbo.setSelected(true);
+                lblPresentacion.setVisible(true);
+                txtPresentacion.setVisible(true);
             }
         });
 
@@ -125,6 +135,8 @@ public class FrontEnd extends JFrame{
                 btnFruta.setSelected(false);
                 btnLacteo.setSelected(false);
                 btnCarne.setSelected(true);
+                lblPresentacion.setVisible(false);
+                txtPresentacion.setVisible(false);
             }
         });
 
@@ -136,6 +148,8 @@ public class FrontEnd extends JFrame{
                 btnCarne.setSelected(false);
                 btnVegetal.setSelected(false);
                 btnLacteo.setSelected(true);
+                lblPresentacion.setVisible(true);
+                txtPresentacion.setVisible(true);
             }
         });
 
@@ -185,20 +199,31 @@ public class FrontEnd extends JFrame{
                     txtDescripcion.setText("");
                     txtCodigo.setText("");
                     txtPresentacion.setText("");
-
-                    String reporte = String.join("\n", service.get());
-                    JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), reporte);
+                    btnFruta.setSelected(false);
+                    btnVegetal.setSelected(false);
+                    btnCarbo.setSelected(false);
+                    btnCarne.setSelected(false);
+                    btnLacteo.setSelected(false);
 
                 } catch (ErrorEnCantidadStockExcepcion error) {
-                    error.printStackTrace();
+                    //error.printStackTrace();
                     JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), error.getMessage());
                 } catch (ErrorEnPrecioExcepcion error) {
-                    error.printStackTrace();
+                    //error.printStackTrace();
                     JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), error.getMessage());
                 }
+
+                String reporte = String.join("\n", service.get());
+                JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), reporte);
             }
         });
 
+        this.agregarComponentes(lblProducto);
+        this.agregarComponentes(btnFruta);
+        this.agregarComponentes(btnVegetal);
+        this.agregarComponentes(btnCarbo);
+        this.agregarComponentes(btnCarne);
+        this.agregarComponentes(btnLacteo);
         this.agregarComponentes(lblCodigo);
         this.agregarComponentes(txtCodigo);
         this.agregarComponentes(lblNombre);

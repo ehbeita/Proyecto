@@ -1,6 +1,7 @@
 package GroceryStoreInventory.repositories;
 
 import GroceryStoreInventory.entities.Carbohidrato;
+import GroceryStoreInventory.entities.Lacteo;
 import GroceryStoreInventory.entities.Producto;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,7 +31,6 @@ public class InventoryRepository implements Repository{
 
         try {
             bw = new BufferedWriter(new FileWriter(archivo));
-
             if (archivo.exists()) {
                 if (producto.tipo() == FRUTA || producto.tipo() == VEG || producto.tipo() == CARN) {
                     bw.append(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
@@ -48,7 +48,7 @@ public class InventoryRepository implements Repository{
                             bw.append(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                                     "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
                                     "|" + producto.getCantidadStock() + "|" + producto.getDescripcion() +
-                                    "|" + ((Carbohidrato) producto).getPresentacion() + "\n");
+                                    "|" + ((Lacteo) producto).getPresentacion() + "\n");
                         }
                     }
                 }
@@ -70,7 +70,7 @@ public class InventoryRepository implements Repository{
                             bw.write(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                                     "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
                                     "|" + producto.getCantidadStock() + "|" + producto.getDescripcion() +
-                                    "|" + ((Carbohidrato) producto).getPresentacion() + "\n");
+                                    "|" + ((Lacteo) producto).getPresentacion() + "\n");
                         }
                     }
                 }
@@ -91,8 +91,68 @@ public class InventoryRepository implements Repository{
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String linea = myReader.nextLine();
-                productos.add(linea);
-                System.out.println(linea);
+                String[] lines = linea.split("\\|");
+                String tipo="";
+                if(Integer.parseInt(lines[0])==FRUTA){
+                    tipo="Fruta";
+                }
+                else{
+                    if(Integer.parseInt(lines[0])==VEG){
+                        tipo="Vegetal";
+                    }
+                    else{
+                        if(Integer.parseInt(lines[0])==CARB){
+                            tipo="Carbohidrato";
+                        }
+                        else{
+                            if(Integer.parseInt(lines[0])==CARN){
+                                tipo="Carne";
+                            }
+                            else{
+                                if(Integer.parseInt(lines[0])==LACT){
+                                    tipo="Lacteo";
+                                }
+                            }
+                        }
+                    }
+                }
+                String info="";
+                if (Integer.parseInt(lines[0])==FRUTA || Integer.parseInt(lines[0])==VEG ||
+                        Integer.parseInt(lines[0])==CARN) {
+                        info = "------ Informacion del Producto " + lines[1] + " ------" + "\n"
+                            + "Tipo :" + tipo + "\n"
+                            + "Nombre : " + lines[2] + "\n"
+                            + "Tipo de Unidad : " + lines[3] + "\n"
+                            + "Precio por unidad : " + lines[4] + "\n";
+
+                    if (Integer.parseInt(lines[5])>0) { //if in stock
+                        info = info + "Cantidad en stock : " + lines[5] + "\n";
+                    } else {
+                        info = info + "No hay unidades en stock \n";
+                    }
+
+                    info = info + "Descripcion : " + lines[6] + "\n";
+                }
+                else{
+                    if (Integer.parseInt(lines[0])==CARB || Integer.parseInt(lines[0])==LACT) {
+                        info = "------ Informacion del Producto " + lines[1] + " ------" + "\n"
+                                + "Tipo :" + tipo + "\n"
+                                + "Nombre : " + lines[2] + "\n"
+                                + "Tipo de Unidad : " + lines[3] + "\n"
+                                + "Presentacion : " + lines[7] + "\n"
+                                + "Precio por unidad : " + lines[4] + "\n";
+
+                        if (Integer.parseInt(lines[5])>0) { //if in stock
+                            info = info + "Cantidad en stock : " + lines[5] + "\n";
+                        } else {
+                            info = info + "No hay unidades en stock \n";
+                        }
+
+                        info = info + "Descripcion : " + lines[6] + "\n";
+                        productos.add(info);
+                    }
+                }
+                productos.add(info);
             }
             myReader.close();
         } catch (FileNotFoundException e) {

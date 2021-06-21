@@ -53,7 +53,6 @@ public class InventoryService {
                 errorEnCantidadStockException.printStackTrace();
             }
         }
-
         Producto producto;
         producto = null;
         if (tipo==FRUTA){

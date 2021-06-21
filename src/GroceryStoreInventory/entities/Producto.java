@@ -21,6 +21,7 @@ abstract public class Producto {
         this.precioUnidad=precioUnidad;
         this.cantidadStock=cantidadStock;
         this.descripcion=descripcion;
+        this.codigo=codigo;
     }
 
     public String getNombre(){
