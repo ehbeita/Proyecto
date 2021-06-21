@@ -1,6 +1,6 @@
 package GroceryStoreInventory.entities;
 
-public class Carbohidrato extends Producto{
+public class Carbohidrato extends Producto {
 
     private String presentacion;
 
@@ -16,7 +16,7 @@ public class Carbohidrato extends Producto{
 
     @Override
     public int tipo() {
-        return Producto.CARB;
+        return CARB;
     }
 
     @Override

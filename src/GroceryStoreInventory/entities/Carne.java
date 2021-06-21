@@ -1,6 +1,8 @@
 package GroceryStoreInventory.entities;
 
-public class Carne extends Producto{
+import GroceryStoreInventory.entities.Producto;
+
+public class Carne extends Producto {
 
     public Carne(String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,
                  String descripcion, String codigo){

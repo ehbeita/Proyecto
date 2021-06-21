@@ -1,6 +1,6 @@
 package GroceryStoreInventory.entities;
 
-public class Lacteo extends Producto{
+public class Lacteo extends Producto {
 
     private String presentacion;
 

@@ -1,6 +1,6 @@
 package GroceryStoreInventory.entities;
 
-public class Vegetal extends Producto{
+public class Vegetal extends Producto {
 
     public Vegetal(String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,
                    String descripcion, String codigo){

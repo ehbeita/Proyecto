@@ -1,8 +1,6 @@
 package GroceryStoreInventory.entities;
 
-import java.util.List;
-
-abstract class Producto {
+abstract public class Producto {
 
     private String nombre;
     private String tipoUnidad;
@@ -51,6 +49,10 @@ abstract class Producto {
 
     public void removerStock(int cantidad){
         this.cantidadStock=this.cantidadStock-cantidad;
+    }
+
+    public void agregarStock(int cantidad){
+        this.cantidadStock=this.cantidadStock+cantidad;
     }
 
     public boolean inStock(){
