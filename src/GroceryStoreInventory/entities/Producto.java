@@ -10,11 +10,11 @@ abstract public class Producto {
     private int cantidadStock;
     private String descripcion;
     private String codigo;
-    public static final int FRUTA=1;
-    public static final int VEG=2;
-    public static final int CARB=3;
-    public static final int CARN=4;
-    public static final int LACT=5;
+    static final int FRUTA=1;
+    static final int VEG=2;
+    static final int CARB=3;
+    static final int CARN=4;
+    static final int LACT=5;
 
     //constructor por con parametros.
     public Producto (String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,

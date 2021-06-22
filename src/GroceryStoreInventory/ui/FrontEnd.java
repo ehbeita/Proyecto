@@ -1,6 +1,5 @@
 package GroceryStoreInventory.ui;
 
-import GroceryStoreInventory.entities.Vegetal;
 import GroceryStoreInventory.services.*;
 import GroceryStoreInventory.repositories.InventoryRepository;
 
