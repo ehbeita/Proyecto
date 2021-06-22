@@ -1,7 +1,9 @@
 package GroceryStoreInventory.entities;
 
+//Clase Producto abstracta de la cual implementan de 0 a 100%
 abstract public class Producto {
 
+    //atributos de la clase Producto abstracta
     private String nombre;
     private String tipoUnidad;
     private Double precioUnidad;
@@ -14,6 +16,7 @@ abstract public class Producto {
     public static final int CARN=4;
     public static final int LACT=5;
 
+    //constructor por con parametros.
     public Producto (String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,
                      String descripcion, String codigo){
         this.nombre=nombre;
@@ -23,7 +26,7 @@ abstract public class Producto {
         this.descripcion=descripcion;
         this.codigo=codigo;
     }
-
+    //cada uno de los sets y gets de la clase abstracta de la cual heredan ciertos sets y gets
     public String getNombre(){
         return this.nombre;
     }
@@ -48,14 +51,17 @@ abstract public class Producto {
         return this.codigo;
     }
 
+    //metodo para remover del stock
     public void removerStock(int cantidad){
         this.cantidadStock=this.cantidadStock-cantidad;
     }
 
+    //metodo para agregar del stock
     public void agregarStock(int cantidad){
         this.cantidadStock=this.cantidadStock+cantidad;
     }
 
+    //metodo para saber si hay stock
     public boolean inStock(){
         if(this.cantidadStock>0){
             return true;
@@ -65,6 +71,7 @@ abstract public class Producto {
         }
     }
 
+    //metodo para saber si hay suficiente stock para remover la cantidad ingresada
     public boolean enoughInStock(int cantidad){
         if(this.cantidadStock<cantidad){
             return true;
@@ -74,8 +81,10 @@ abstract public class Producto {
         }
     }
 
+    //metodo abstracto del cual las clases que implementan, indican su tipo
     public abstract int tipo();
 
+    //metodo abstracto del cual las clases que implementan, indican su informacion de producto
     public abstract void infoProducto();
 
 }

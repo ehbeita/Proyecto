@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+//variables estaticas finales para manejar los tipos de productos
 public class FrontEnd extends JFrame{
 
     private static final int FRUTA=1;
@@ -16,30 +17,35 @@ public class FrontEnd extends JFrame{
     private static final int CARN=4;
     private static final int LACT=5;
 
+    //constructor para inicializar la clase de UI
     public FrontEnd (String titulo){
         super(titulo);
     }
 
+    //acomoda los elementos e inicializa antes de mostrar
     public void build(){
         this.construccionPantalla();
         this.crearComponentes();
         super.setVisible(true);
     }
 
+    //construye la ventana de forma correcta
     private void construccionPantalla(){
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setSize(500,200);
         super.setLayout(new GridLayout(6,2));//6/2
     }
 
+    //agrega los componentes uno tras otro.
     private void agregarComponentes(Component componente){
         super.getContentPane().add(componente);
     }
 
+    //crea los componentes, los textos, campos, botones y annade
+    //los diferentes eventos al consultar el inventario o annadir un producto.
     private void crearComponentes(){
 
         JLabel lblProducto = new JLabel("Producto");
-        //JLabel lblSpace = new JLabel("");
         JLabel lblCodigo = new JLabel("Codigo");
         JLabel lblNombre = new JLabel("Nombre");
         JLabel lblTipoUnidad = new JLabel("Tipo de Unidad");
@@ -60,34 +66,23 @@ public class FrontEnd extends JFrame{
         txtPresentacion.setVisible(false);
 
         JRadioButton btnFruta = new JRadioButton("Fruta");
-        //btnFruta.setMnemonic(KeyEvent.VK_B);
-        //btnFruta.setActionCommand(birdString);
-        //btnFruta.setSelected(true);
+
 
         JRadioButton btnVegetal = new JRadioButton("Vegetal");
-        //catButton.setMnemonic(KeyEvent.VK_C);
-        //catButton.setActionCommand(catString);
+
 
         JRadioButton btnCarbo = new JRadioButton("Carbohidrato");
-        //dogButton.setMnemonic(KeyEvent.VK_D);
-        //dogButton.setActionCommand(dogString);
+
 
         JRadioButton btnCarne = new JRadioButton("Carne");
-        //rabbitButton.setMnemonic(KeyEvent.VK_R);
-        //rabbitButton.setActionCommand(rabbitString);
+
 
         JRadioButton btnLacteo = new JRadioButton("Lacteo");
-        //pigButton.setMnemonic(KeyEvent.VK_P);
-        //pigButton.setActionCommand(pigString);
 
-        //Group the radio buttons.
-        /*ButtonGroup groupProducto = new ButtonGroup();
-        groupProducto.add(btnFruta);
-        groupProducto.add(btnVegetal);
-        groupProducto.add(btnCarbo);
-        groupProducto.add(btnCarne);
-        groupProducto.add(btnLacteo);*/
 
+        //lo que sucede cuando las opciones de productos son escogidas
+        //para que solo una sea escogida siempre y se habiliten los campos
+        //necesarios de cada uno.
         btnFruta.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -153,6 +148,8 @@ public class FrontEnd extends JFrame{
             }
         });
 
+        //lo que sucede al darle click al boton de agregar
+        //donde se agrega el producto y se valida si los datos estan bien.
         JButton salvar = new JButton("Guardar");
         salvar.addActionListener(new AbstractAction() {
             @Override
@@ -204,7 +201,7 @@ public class FrontEnd extends JFrame{
                     btnCarbo.setSelected(false);
                     btnCarne.setSelected(false);
                     btnLacteo.setSelected(false);
-
+                    JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), "Producto guardado exitosamente.");
                 } catch (ErrorEnCantidadStockExcepcion error) {
                     //error.printStackTrace();
                     JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), error.getMessage());
@@ -212,11 +209,26 @@ public class FrontEnd extends JFrame{
                     //error.printStackTrace();
                     JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), error.getMessage());
                 }
-
-                String reporte = String.join("\n", service.get());
-                JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), reporte);
             }
         });
+
+        //lo que sucede cuando se da click en el buton de ver inventario
+        JButton leer = new JButton("Ver Inventario");
+        leer.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InventoryService service = new InventoryService(new InventoryRepository());
+                if(service.get().isEmpty()){
+                    JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), "No hay productos agregados en este momento.");
+                }
+                else{
+                    String reporte = String.join("\n", service.get());
+                    JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), reporte);
+                }
+            }
+        });
+
+        //agrega cada componente en orden
 
         this.agregarComponentes(lblProducto);
         this.agregarComponentes(btnFruta);
@@ -239,6 +251,7 @@ public class FrontEnd extends JFrame{
         this.agregarComponentes(lblPresentacion);
         this.agregarComponentes(txtPresentacion);
         this.agregarComponentes(salvar);
+        this.agregarComponentes(leer);
 
     }
 }

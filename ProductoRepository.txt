@@ -1,1 +1,4 @@
-1|34xf|fruta|roja|12.0|3|asdasdasd
+2|12345yu|Zanahoria Morada|Bolsa|350.0|5|Zanahora Descripcion
+1|4554|sdfsdf|dsfsdf5|4.0|7|tr
+4|Mol12345|Molida|Magra 5%|3500.0|600000|Descripcion #1
+1|xx345|Banano|Bolsa|34.0|2|Banano 034

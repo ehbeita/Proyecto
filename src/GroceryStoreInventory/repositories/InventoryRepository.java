@@ -15,35 +15,38 @@ import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
+// Clase de repositorio de inventario que implementa de la interfaz repositorio
 public class InventoryRepository implements Repository{
 
+    //variables estaticas finales para manejar los tipos de productos
     private static final int FRUTA=1;
     private static final int VEG=2;
     private static final int CARB=3;
     private static final int CARN=4;
     private static final int LACT=5;
 
+    //metodo para salvar el producto
     @Override
     public void saveProducto(Producto producto, Date fechaAct){
         File archivo = new File("ProductoRepository.txt");
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         BufferedWriter bw;
-
+        //obtiene el archivo para poder escribir en el.
         try {
-            bw = new BufferedWriter(new FileWriter(archivo));
-            if (archivo.exists()) {
+            if (archivo.exists()) {//si existe ingresa el producto
+                bw = new BufferedWriter(new FileWriter(archivo, true));
                 if (producto.tipo() == FRUTA || producto.tipo() == VEG || producto.tipo() == CARN) {
                     bw.append(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                             "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
                             "|" + producto.getCantidadStock() + "|" + producto.getDescripcion() + "\n");
-                } else {
+                } else {//si es carbohidrato annade sus atributos extras
                     if (producto.tipo() == CARB) {
                         bw.append(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                                 "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
                                 "|" + producto.getCantidadStock() + "|" + producto.getDescripcion() +
                                 "|" + ((Carbohidrato) producto).getPresentacion() + "\n");
                     }
-                    else{
+                    else{//si es lacteo annade sus atributos extras
                         if (producto.tipo() == LACT) {
                             bw.append(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                                     "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
@@ -53,19 +56,20 @@ public class InventoryRepository implements Repository{
                     }
                 }
             }
-            else{
+            else{//si el archivo no existe, ingresa el producto
+                bw = new BufferedWriter(new FileWriter(archivo));
                 if (producto.tipo() == FRUTA || producto.tipo() == VEG || producto.tipo() == CARN) {
                     bw.write(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                             "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
                             "|" + producto.getCantidadStock() + "|" + producto.getDescripcion() + "\n");
-                } else {
+                } else {//si es carbohidrato annade sus atributos extras
                     if (producto.tipo() == CARB) {
                         bw.write(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                                 "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
                                 "|" + producto.getCantidadStock() + "|" + producto.getDescripcion() +
                                 "|" + ((Carbohidrato) producto).getPresentacion() + "\n");
                     }
-                    else{
+                    else{//si es lacteo annade sus atributos extras
                         if (producto.tipo() == LACT) {
                             bw.write(producto.tipo() + "|" + producto.getCodigo() + "|" + producto.getNombre() +
                                     "|" + producto.getTipoUnidad() + "|" + producto.getPrecioUnidad() +
@@ -77,16 +81,21 @@ public class InventoryRepository implements Repository{
             }
             bw.close();
         }
-        catch (Exception e){
+        catch (Exception e){// registra la excepcion al escribir
             e.printStackTrace();
             System.out.println("Hubo un problema con el almacenamiento del producto.");
         }
     }
 
+    //metodo que implementa el obtener todos los productos del archivo
     @Override
     public List<String> get(){
         List<String> productos = new ArrayList<>();
-        try {
+        try {//trata de leer el archivo, recorriendo cada linea.
+            //en cada linea pregunta por el primer valor para saber que tipo de
+            //producto es y en base a eso indica su tipo.
+            //Los atributos del archivo para cada linea de producto
+            //registrado es dividido por "|" para llevar un control.
             File myObj = new File("ProductoRepository.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
@@ -149,7 +158,6 @@ public class InventoryRepository implements Repository{
                         }
 
                         info = info + "Descripcion : " + lines[6] + "\n";
-                        productos.add(info);
                     }
                 }
                 productos.add(info);

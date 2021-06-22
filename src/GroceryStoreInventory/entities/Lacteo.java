@@ -1,24 +1,29 @@
 package GroceryStoreInventory.entities;
 
+//Clase Lacteo que hereda de Producto
 public class Lacteo extends Producto {
 
-    private String presentacion;
+    private String presentacion;//los lacteos tienen diferentes presentaciones.
 
+    //constructor por con parametros.
     public Lacteo(String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,
                   String descripcion, String codigo, String presentacion){
         super(nombre, tipoUnidad, precioUnidad, cantidadStock, descripcion, codigo);
         this.presentacion=presentacion;
     }
 
+    //obtiene el tipo de producto
     @Override
     public int tipo() {
         return Producto.LACT;
     }
 
+    //obtiene la presentacion del producto
     public String getPresentacion(){
         return this.presentacion;
     }
 
+    //obtiene la informacion del producto
     @Override
     public void infoProducto(){
         String info="";

@@ -1,19 +1,21 @@
 package GroceryStoreInventory.entities;
 
-import GroceryStoreInventory.entities.Producto;
-
+//Clase Carne que hereda de Producto
 public class Carne extends Producto {
 
+    //constructor por con parametros.
     public Carne(String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,
                  String descripcion, String codigo){
         super(nombre, tipoUnidad, precioUnidad, cantidadStock, descripcion, codigo);
     }
 
+    //obtiene el tipo de producto
     @Override
     public int tipo() {
         return Producto.CARN;
     }
 
+    //obtiene la informacio del producto
     @Override
     public void infoProducto(){
         String info="";

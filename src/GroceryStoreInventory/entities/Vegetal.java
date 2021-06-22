@@ -1,17 +1,21 @@
 package GroceryStoreInventory.entities;
 
+//Clase Vegetal que hereda de Producto
 public class Vegetal extends Producto {
 
+    //constructor por con parametros.
     public Vegetal(String nombre, String tipoUnidad, Double precioUnidad, int cantidadStock,
                    String descripcion, String codigo){
         super(nombre, tipoUnidad, precioUnidad, cantidadStock, descripcion, codigo);
     }
 
+    //obtiene el tipo de producto
     @Override
     public int tipo() {
         return Producto.VEG;
     }
 
+    //obtiene la informacion de producto
     @Override
     public void infoProducto(){
         String info="";
